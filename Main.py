@@ -14,6 +14,18 @@ def vector_rotation(vectors, angle):
     return rotated
 
 
+def vector_resize(vectors, coefficient):
+    scaled = np.array([ # but not icy...
+        [coefficient, 0],
+        [0, coefficient]
+    ])
+
+    # Scale each point
+    resized = np.dot(vectors, scaled)
+
+    return resized
+
+
 ## FUNCTIONS END ##
 
 
@@ -27,8 +39,8 @@ fish = np.array([
     [0.8, 0.05],[0.6, -0.2],[0.3, -0.1],[0, 0]
 ])
 
-flower_rotation = vector_rotation(flower, 45)
 fish_rotation = vector_rotation(fish, 20)
+fish_resized = vector_resize(fish, 2)
 
 x_fish = fish[:, 0]
 y_fish = fish[:, 1]
@@ -36,18 +48,14 @@ y_fish = fish[:, 1]
 x_fish_rotated = fish_rotation[:, 0]
 y_fish_rotated = fish_rotation[:, 1]
 
-x_flower = flower[:, 0]
-y_flower = flower[:, 1]
+x_fish_resized = fish_resized[:, 0]
+y_fish_resized = fish_resized[:, 1]
 
-x_flower_rotated = flower_rotation[:, 0]
-y_flower_rotated = flower_rotation[:, 1]
-
-plt.plot(x_flower, y_flower, marker='o', color='darkgreen', label='Flower')
-plt.plot(x_flower_rotated, y_flower_rotated, marker='o', color='lightgreen', label='Flower Rotation')
 plt.plot(x_fish, y_fish, marker='o',color='darkblue', label='Fish')
-plt.plot(x_fish_rotated, y_fish_rotated, marker='o',color='lightblue', label='Fish rotation')
+plt.plot(x_fish_rotated, y_fish_rotated, marker='o',color='darkgreen', label='Fish rotation')
+plt.plot(x_fish_resized, y_fish_resized, marker='o',color='black', label='Fish resized')
 
-plt.title("Flower and Fish")
+plt.title("Fish")
 plt.xlabel("X")
 plt.ylabel("Y")
 plt.grid(True)
