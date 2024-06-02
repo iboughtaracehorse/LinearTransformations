@@ -20,10 +20,16 @@ def vector_resize(vectors, coefficient):
         [0, coefficient]
     ])
 
-    # Scale each point
     resized = np.dot(vectors, scaled)
 
     return resized
+
+
+def mirror(vectors):
+    # [1, -1] for x, [-1, 1] for y
+    mirrored = vectors * np.array([-1, 1])
+
+    return mirrored
 
 
 ## FUNCTIONS END ##
@@ -39,8 +45,9 @@ fish = np.array([
     [0.8, 0.05],[0.6, -0.2],[0.3, -0.1],[0, 0]
 ])
 
-fish_rotation = vector_rotation(fish, 20)
+fish_rotation = vector_rotation(fish, 180)
 fish_resized = vector_resize(fish, 2)
+fish_mirrored = mirror_x(fish)
 
 x_fish = fish[:, 0]
 y_fish = fish[:, 1]
@@ -51,9 +58,13 @@ y_fish_rotated = fish_rotation[:, 1]
 x_fish_resized = fish_resized[:, 0]
 y_fish_resized = fish_resized[:, 1]
 
+x_fish_mirrored = fish_mirrored[:, 0]
+y_fish_mirrored = fish_mirrored[:, 1]
+
 plt.plot(x_fish, y_fish, marker='o',color='darkblue', label='Fish')
-plt.plot(x_fish_rotated, y_fish_rotated, marker='o',color='darkgreen', label='Fish rotation')
-plt.plot(x_fish_resized, y_fish_resized, marker='o',color='black', label='Fish resized')
+plt.plot(x_fish_mirrored, y_fish_mirrored, marker='o',color='green', label='Fish')
+#plt.plot(x_fish_rotated, y_fish_rotated, marker='o',color='darkgreen', label='Fish rotation')
+#plt.plot(x_fish_resized, y_fish_resized, marker='o',color='black', label='Fish resized')
 
 plt.title("Fish")
 plt.xlabel("X")
