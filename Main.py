@@ -1,7 +1,10 @@
+#####################################  LIBRARIES  #########################################
+
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
-##########################################################################
+
+#####################################  FUNCTIONS  #########################################
 
 
 def vector_rotation(vectors, angle):
@@ -58,7 +61,7 @@ def transformation(vectors, transformation):
     return transformed
 
 
-##########################################################################
+#####################################  OBJECTS  #########################################
 
 flower = np.array([
     [0, 0],[0.5, 0.4],[1, 0],
@@ -69,9 +72,6 @@ fish = np.array([
     [0, 0],[0.3, 0.1],[0.6, 0.3],
     [0.8, 0.05],[0.6, -0.2],[0.3, -0.1],[0, 0]
 ])
-
-###################################  PYRAMID  #######################################
-
 
 pyramid = np.array([
     [0, 0, 0],
@@ -93,15 +93,17 @@ edges = [
     [pyramid[3], pyramid[4]]
 ]
 
-##########################################################################
+#################################  FUNCTION CALLS  #####################################
 
 fish_rotation = vector_rotation(fish, 20)
 fish_resized = vector_scale(fish, -3)
 fish_mirrored = mirror(fish, "y")
 fish_transformed = transformation(fish, [[1, 4],[9, 1]])
 vector_axis_rotation = axis_rotation(fish, 2, "y")
+#pyramid_scaled = vector_scale_3d(pyramid, 2)
+#pyramid_mirror = mirror_3d(pyramid, "z")
 
-##########################################################################
+#############################  GETTING THOSE COORDINATES  #################################
 
 x_fish = fish[:, 0]
 y_fish = fish[:, 1]
@@ -121,12 +123,7 @@ y_fish_transformed = fish_transformed[:, 1]
 x_fish_axis = vector_axis_rotation[:, 0]
 y_fish_axis = vector_axis_rotation[:, 1]
 
-###################################  PYRAMID  #######################################
-
-#pyramid_scaled = vector_scale_3d(pyramid, 2)
-#pyramid_mirror = mirror_3d(pyramid, "z")
-
-##########################################################################
+###################################  PLOTTING  #######################################
 
 #plt.plot(x_fish, y_fish, marker='o', color='#007362', label='Fish') ### OG FISH
 #plt.plot(x_fish_rotated, y_fish_rotated, marker='o', color='#3b3b3b', label='Fish rotation') ### ROTATED FISH
@@ -135,7 +132,7 @@ y_fish_axis = vector_axis_rotation[:, 1]
 #plt.plot(x_fish_transformed, y_fish_transformed, marker='o',color='#8993B2', label='TransformedFish')  ### TRANSFORMED FISH
 #plt.plot(x_fish_axis, y_fish_axis, marker='o',color='#999F4B', label='Axis rotation')
 
-##########################################################################
+###################################  SHOWING  #######################################
 
 '''plt.title("Fish transformations")
 plt.xlabel("X")
@@ -145,6 +142,7 @@ plt.legend()
 plt.gca().set_aspect('equal', adjustable='box')
 plt.show()
 
+###################################  PYRAMID SHOW  #######################################
 
 fig = plt.figure(figsize=(10, 6))
 ax = fig.add_subplot(131, projection='3d')
@@ -174,7 +172,7 @@ plt.show()'''
 
 ###################################  IMAGE  #######################################
 
-
+'''
 def rotate_image(image, angle):
     h, w, c = image.shape
     center = (w // 2, h // 2)
@@ -207,11 +205,11 @@ image = cv2.imread('nikki.jpg')
 h, w, c = image.shape
 image_coordinate = np.array([[0, 0], [0, h], [w, 0], [w, h]])
 
-#pic_rotation = rotate_image(image, 25)
-#scaled_image = scale_image(image, 0.5)
+pic_rotation = rotate_image(image, 25)
+scaled_image = scale_image(image, 0.5)
 mirrored_image = mirror_image(image, "x")
 
-'''plt.subplot(1, 2, 1)
+plt.subplot(1, 2, 1)
 plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
 plt.title("Original Image")
 plt.axis('off')
@@ -219,7 +217,7 @@ plt.axis('off')
 plt.subplot(1, 2, 2)
 plt.imshow(cv2.cvtColor(pic_rotation, cv2.COLOR_BGR2RGB))
 plt.title("Rotated Image")
-plt.axis('off')'''
+plt.axis('off')
 
 cv2.imshow('Original Image', image)
 #cv2.imshow('Scaled Image', scaled_image)
@@ -228,5 +226,5 @@ cv2.imshow('Mirrored Image', mirrored_image)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-plt.show()
+plt.show()'''
 
