@@ -5,20 +5,20 @@ import matplotlib.pyplot as plt
 
 
 def vector_rotation(vectors, angle):
-    radians = np.deg2rad(angle);
+    radians = np.deg2rad(angle)
     rotate = np.array([[np.cos(radians), -np.sin(radians)], [np.sin(radians), np.cos(radians)]])
     rotated = np.dot(vectors, rotate)
     return rotated
 
 
-def vector_resize(vectors, coefficient):
-    scaled = np.array([ # but not icy...
+def vector_scale(vectors, coefficient):
+    scale = np.array([ # but not icy...
         [coefficient, 0],
         [0, coefficient]
     ])
 
-    resized = np.dot(vectors, scaled)
-    return resized
+    scaled = np.dot(vectors, scale)
+    return scaled
 
 
 def mirror(vectors):
@@ -61,12 +61,12 @@ y_fish_resized = fish_resized[:, 1]
 x_fish_mirrored = fish_mirrored[:, 0]
 y_fish_mirrored = fish_mirrored[:, 1]
 
-x = fish_transformed[:, 0]
-y = fish_transformed[:, 1]
+x_fish_transformed = fish_transformed[:, 0]
+y_fish_transformed = fish_transformed[:, 1]
 
 plt.plot(x_fish, y_fish, marker='o',color='darkblue', label='Fish')
 plt.plot(x_fish_mirrored, y_fish_mirrored, marker='o',color='green', label='Fish')
-plt.plot(x, y, marker='o',color='red', label='Fish')
+plt.plot(x_fish_transformed, y_fish_transformed, marker='o',color='red', label='Fish')
 #plt.plot(x_fish_rotated, y_fish_rotated, marker='o',color='darkgreen', label='Fish rotation')
 #plt.plot(x_fish_resized, y_fish_resized, marker='o',color='black', label='Fish resized')
 
