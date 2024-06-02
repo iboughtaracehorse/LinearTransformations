@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+import cv2
 ##########################################################################
 
 
@@ -70,6 +70,9 @@ fish = np.array([
     [0.8, 0.05],[0.6, -0.2],[0.3, -0.1],[0, 0]
 ])
 
+###################################  PYRAMID  #######################################
+
+
 pyramid = np.array([
     [0, 0, 0],
     [1, 0, 0],
@@ -118,8 +121,10 @@ y_fish_transformed = fish_transformed[:, 1]
 x_fish_axis = vector_axis_rotation[:, 0]
 y_fish_axis = vector_axis_rotation[:, 1]
 
+###################################  PYRAMID  #######################################
+
 #pyramid_scaled = vector_scale_3d(pyramid, 2)
-pyramid_mirror = mirror_3d(pyramid, "z")
+#pyramid_mirror = mirror_3d(pyramid, "z")
 
 ##########################################################################
 
@@ -138,7 +143,7 @@ plt.ylabel("Y")
 plt.grid(True)
 plt.legend()
 plt.gca().set_aspect('equal', adjustable='box')
-plt.show()'''
+plt.show()
 
 
 fig = plt.figure(figsize=(10, 6))
@@ -148,11 +153,11 @@ for edge in edges:
     ax.plot(*zip(*edge), color='#007362')
 ax.scatter(pyramid[:, 0], pyramid[:, 1], pyramid[:, 2], c='black', marker='o', label='Original Pyramid')
 
-'''ax3 = fig.add_subplot(132, projection='3d')
+ax3 = fig.add_subplot(132, projection='3d')
 for edge in edges:
     scaled_edge = [vector_scale_3d(np.array(edge), 2) for vertex in edge]
     ax.plot(*zip(*scaled_edge[0]), color='#89b2a0')
-ax.scatter(pyramid_scaled[:, 0], pyramid_scaled[:, 1], pyramid_scaled[:, 2], c='black', marker='o', label='Scaled Pyramid')'''
+ax.scatter(pyramid_scaled[:, 0], pyramid_scaled[:, 1], pyramid_scaled[:, 2], c='black', marker='o', label='Scaled Pyramid')
 
 ax3 = fig.add_subplot(133, projection='3d')
 for edge in edges:
@@ -165,11 +170,63 @@ ax.set_xlabel("X")
 ax.set_ylabel("Y")
 ax.set_zlabel("Z")
 ax.legend()
+plt.show()'''
+
+###################################  IMAGE  #######################################
+
+
+def rotate_image(image, angle):
+    h, w, c = image.shape
+    center = (w // 2, h // 2)
+    rotation = cv2.getRotationMatrix2D(center, angle, 1.0)
+    rotated_image = cv2.warpAffine(image, rotation, (w, h))
+    return rotated_image
+
+
+def scale_image(image, coefficient):
+    h, w, c = image.shape
+    new_height = int(h * coefficient)
+    new_width = int(w * coefficient)
+    scaled_and_icy = cv2.resize(image, (new_width, new_height))
+    return scaled_and_icy
+
+
+def mirror_image(image, axis):
+    if axis == "x":
+        mode = 0
+    elif axis == "y":
+        mode = 1
+
+    mirrored = cv2.flip(image, mode)
+
+    return mirrored
+
+
+image = cv2.imread('nikki.jpg')
+
+h, w, c = image.shape
+image_coordinate = np.array([[0, 0], [0, h], [w, 0], [w, h]])
+
+#pic_rotation = rotate_image(image, 25)
+#scaled_image = scale_image(image, 0.5)
+mirrored_image = mirror_image(image, "x")
+
+'''plt.subplot(1, 2, 1)
+plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+plt.title("Original Image")
+plt.axis('off')
+
+plt.subplot(1, 2, 2)
+plt.imshow(cv2.cvtColor(pic_rotation, cv2.COLOR_BGR2RGB))
+plt.title("Rotated Image")
+plt.axis('off')'''
+
+cv2.imshow('Original Image', image)
+#cv2.imshow('Scaled Image', scaled_image)
+cv2.imshow('Mirrored Image', mirrored_image)
+
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 plt.show()
-
-##########################################################################
-
-
-
-
 
