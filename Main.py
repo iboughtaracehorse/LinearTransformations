@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-## FUNCTIONS ##
+##########################################################################
 
 
 def vector_rotation(vectors, angle):
@@ -26,18 +26,18 @@ def mirror(vectors):
     return mirrored
 
 
-def axe_rotation(vectors, angle):
+def axis_rotation(vectors, angle):
     rotate = np.array([[1, angle], [0, 1]])
     rotated = np.dot(vectors, rotate)
-    return rotate
+    return rotated
 
 
 def transformation(vectors, transformation):
     transformed = np.dot(vectors, transformation)
     return transformed
 
-## FUNCTIONS END ##
 
+##########################################################################
 
 flower = np.array([
     [0, 0],[0.5, 0.4],[1, 0],
@@ -69,11 +69,15 @@ edges = [
     [pyramid[3], pyramid[4]]
 ]
 
-fish_rotation = vector_rotation(fish, 90)
+##########################################################################
+
+fish_rotation = vector_rotation(fish, 2)
 fish_resized = vector_scale(fish, 2)
 fish_mirrored = mirror(fish)
 fish_transformed = transformation(fish, [[1, 0],[0, 2]])
-axis_rotation = axe_rotation(fish, 10)
+vector_axis_rotation = axis_rotation(fish, 2)
+
+##########################################################################
 
 x_fish = fish[:, 0]
 y_fish = fish[:, 1]
@@ -90,17 +94,21 @@ y_fish_mirrored = fish_mirrored[:, 1]
 x_fish_transformed = fish_transformed[:, 0]
 y_fish_transformed = fish_transformed[:, 1]
 
-axis_rotation_x = axis_rotation[:, 0]
-axis_rotation_y = axis_rotation[:, 1]
-
-plt.plot(x_fish, y_fish, marker='o',color='darkblue', label='Fish') # OG FISH
-plt.plot(x_fish_rotated, y_fish_rotated, marker='o',color='darkgreen', label='Fish rotation') # ROTATED FISH
-#plt.plot(x_fish_mirrored, y_fish_mirrored, marker='o',color='green', label='Fish') # MIRRORED FISH
-#plt.plot(x_fish_resized, y_fish_resized, marker='o',color='cyan', label='Fish resized') # SCALED FISH
-#plt.plot(x_fish_transformed, y_fish_transformed, marker='o',color='pink', label='Fish')  # TRANSFORMED FISH
-plt.plot(axis_rotation_x, axis_rotation_y, marker='o',color='pink', label='Fish')  # TRANSFORMED FISH
+x_fish_axis = vector_axis_rotation[:, 0]
+y_fish_axis = vector_axis_rotation[:, 1]
 
 ##########################################################################
+
+
+plt.plot(x_fish, y_fish, marker='o',color='#007362', label='Fish') # OG FISH
+plt.plot(x_fish_rotated, y_fish_rotated, marker='o',color='#3b3b3b', label='Fish rotation') # ROTATED FISH
+plt.plot(x_fish_mirrored, y_fish_mirrored, marker='o',color='#89b2a0', label='Fish mirrored') # MIRRORED FISH
+#plt.plot(x_fish_resized, y_fish_resized, marker='o',color='cyan', label='Fish resized') # SCALED FISH
+#plt.plot(x_fish_transformed, y_fish_transformed, marker='o',color='pink', label='Fish')  # TRANSFORMED FISH
+#plt.plot(x_fish_axis, y_fish_axis, marker='o',color='pink', label='Fish')
+
+##########################################################################
+
 plt.title("Fish transformations")
 plt.xlabel("X")
 plt.ylabel("Y")
@@ -109,7 +117,7 @@ plt.legend()
 plt.gca().set_aspect('equal', adjustable='box')
 plt.show()
 
-fig = plt.figure(figsize=(18, 6))
+'''fig = plt.figure(figsize=(18, 6))
 ax1 = fig.add_subplot(131, projection='3d')
 for edge in edges:
     ax1.plot(*zip(*edge), color='black')
@@ -118,7 +126,8 @@ ax1.set_title("Original Pyramid")
 ax1.set_xlabel("X")
 ax1.set_ylabel("Y")
 ax1.set_zlabel("Z")
-plt.show()
+plt.show()'''
+
 ##########################################################################
 
 
