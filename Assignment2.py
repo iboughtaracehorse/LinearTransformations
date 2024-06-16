@@ -4,7 +4,7 @@ import numpy as np
 from matplotlib.image import imread
 import matplotlib.pyplot as plt
 
-#####################################  1  #########################################
+#####################################  0  #########################################
 
 
 def eigenvalues_eigenvectors(matrix, limit):
@@ -34,10 +34,10 @@ values, vectors, check = eigenvalues_eigenvectors(matrix, 2)
 print(values, vectors, check)
 
 
-#####################################  2  #########################################
+#####################################  1  #########################################
 
 
-image_raw = imread('nikki.jpg')
+image_raw = imread('ew.jpg')
 image_shape = image_raw.shape
 print(image_shape)
 
@@ -49,7 +49,7 @@ image_vector = np.array(image_shape)
 print(image_vector) ## what is the reason for this
 
 
-#####################################  3  #########################################
+#####################################  2  #########################################
 
 
 image_sum = image_raw.sum(axis = 2)
@@ -60,3 +60,32 @@ plt.axis('off')
 plt.show()
 
 print(image_bw.max())
+
+#####################################  3  #########################################
+
+
+image_bw_centered = image_bw - np.mean(image_bw, axis=0)
+
+cov_matrix = np.cov(image_bw_centered, rowvar=False)
+
+values, vectors = np.linalg.eigh(cov_matrix)
+
+sorted = np.argsort(values)[::-1]
+values = values[sorted]
+vectors = vectors[:, sorted]
+
+variance = np.cumsum(values) / np.sum(values)
+
+variance_percent = 0.95
+
+n_components = np.where(variance >= variance)[0][0] + 1
+print(f"Components for {variance_percent}", n_components)
+
+plt.plot(variance)
+plt.xlabel('Components')
+plt.ylabel('Variance')
+plt.title('Graph')
+plt.grid(True)
+plt.show()
+
+
