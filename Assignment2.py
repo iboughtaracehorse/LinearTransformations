@@ -1,8 +1,8 @@
 #####################################  LIBRARIES  #########################################
 
 import numpy as np
+from matplotlib.image import imread
 import matplotlib.pyplot as plt
-import cv2
 
 #####################################  FUNCTIONS  #########################################
 
@@ -32,3 +32,13 @@ def eigenvalues_eigenvectors(matrix, limit):
 matrix = np.array([[4, -2], [1, 1]])
 values, vectors, check = eigenvalues_eigenvectors(matrix, 2)
 print(values, vectors, check)
+
+
+image_raw = imread('nikki.jpg')
+image_shape = image_raw.shape
+print(image_shape)
+
+plt.imshow(image_raw)
+plt.axis('off')
+plt.show()
+
