@@ -4,7 +4,7 @@ import numpy as np
 from matplotlib.image import imread
 import matplotlib.pyplot as plt
 
-#####################################  FUNCTIONS  #########################################
+#####################################  1  #########################################
 
 
 def eigenvalues_eigenvectors(matrix, limit):
@@ -34,6 +34,9 @@ values, vectors, check = eigenvalues_eigenvectors(matrix, 2)
 print(values, vectors, check)
 
 
+#####################################  2  #########################################
+
+
 image_raw = imread('nikki.jpg')
 image_shape = image_raw.shape
 print(image_shape)
@@ -42,3 +45,18 @@ plt.imshow(image_raw)
 plt.axis('off')
 plt.show()
 
+image_vector = np.array(image_shape)
+print(image_vector) ## what is the reason for this
+
+
+#####################################  3  #########################################
+
+
+image_sum = image_raw.sum(axis = 2)
+image_bw = image_sum / image_sum.max()
+
+plt.imshow(image_bw, cmap='gray')
+plt.axis('off')
+plt.show()
+
+print(image_bw.max())
