@@ -23,8 +23,8 @@ def eigenvalues_eigenvectors(matrix, limit):
         else:
             check.append(False)
 
-        values = np.round(values, limit) ### ATTENTION: THE NUMBERS ARE ROUNDED HERE!!!
-        vectors = np.round(vectors, limit) ### ATTENTION: THE NUMBERS ARE ROUNDED HERE!!!
+        #values = np.round(values, limit) ### ATTENTION: THE NUMBERS ARE ROUNDED HERE!!!
+        #vectors = np.round(vectors, limit) ### ATTENTION: THE NUMBERS ARE ROUNDED HERE!!!
 
     return values, vectors, check
 
@@ -37,7 +37,7 @@ print(values, vectors, check)
 #####################################  1  #########################################
 
 
-image_raw = imread('ew.jpg')
+image_raw = imread('nikki.jpg')
 image_shape = image_raw.shape
 print(image_shape)
 
@@ -78,14 +78,28 @@ variance = np.cumsum(values) / np.sum(values)
 
 variance_percent = 0.95
 
-n_components = np.where(variance >= variance)[0][0] + 1
+n_components = min(10, len(values))
 print(f"Components for {variance_percent}", n_components)
 
-plt.plot(variance)
+'''plt.plot(variance)
 plt.xlabel('Components')
 plt.ylabel('Variance')
 plt.title('Graph')
 plt.grid(True)
+plt.show()'''
+
+
+#####################################  4  #########################################
+
+
+limited_vectors = vectors[:, :n_components]
+projected = np.dot(image_bw_centered, limited_vectors)
+reconstructed = np.dot(projected, limited_vectors.T)
+reconstructed += np.mean(image_bw, axis=0)
+
+plt.imshow(reconstructed, cmap='gray')
+plt.axis('off')
+plt.title("Reconstructed")
 plt.show()
 
 
