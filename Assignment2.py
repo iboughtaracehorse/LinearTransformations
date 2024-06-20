@@ -78,7 +78,7 @@ variance = np.cumsum(values) / np.sum(values)
 
 variance_percent = 0.95
 
-n_components = min(10, len(values))
+n_components = min(170, len(values))
 print(f"Components for {variance_percent}", n_components)
 
 '''plt.plot(variance)
@@ -101,5 +101,30 @@ plt.imshow(reconstructed, cmap='gray')
 plt.axis('off')
 plt.title("Reconstructed")
 plt.show()
+
+
+#####################################  5  #########################################
+
+
+def encrypt_vector(message, key_matrix):
+    message_vector = np.array([ord(char) for char in message])
+    values, vectors = np.linalg.eig(key_matrix)
+    diagonalized = np.dot(np.dot(vectors, np.diag(values)), np.linalg.inv(vectors))
+    encrypted = np.dot(diagonalized, message_vector)
+    return encrypted
+
+def decrypt_vector(encrypted, key_matrix):
+    values, vectors = np.linalg.eig(key_matrix)
+    diagonalized = np.dot(np.dot(vectors, np.diag(values)), np.linalg.inv(vectors))
+    inverse = np.linalg.inv(diagonalized)
+    decrypted = np.dot(inverse, encrypted)
+    decrypted_message = ''.join([chr(int(round(num))) for num in decrypted])
+
+    return decrypted_message
+
+message = "hello world"
+key_matrix = np.array([[2, 1], [1, 2]])
+decrypted_message = decrypt_vector(np.array([273, 327]), key_matrix)
+print("Decrypted Message:", decrypted_message)
 
 
